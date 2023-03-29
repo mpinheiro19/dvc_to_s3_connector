@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import datahandler as feats
 
-path_to_file = "data/airline_occurences.csv"
+path_to_file = "data/raw/airline_occurences.csv"
 
 df = pd.read_csv(
     path_to_file
@@ -13,7 +13,7 @@ dh = feats.DataHandler(df)
 
 if __name__== "__main__":   
 
-    new_values = dh.get_new_entries_from_yml('data_config.yml')
+    new_values = dh.get_new_entries_from_yml('./data_config.yml')
     
     print("New values received from YAML file!\nColumns:")
     print(*list(

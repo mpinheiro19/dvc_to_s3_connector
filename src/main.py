@@ -1,21 +1,23 @@
-import csv
+from data_loader import data_loader
 import pandas as pd
-import datahandler as feats
+import datahandler
+import yaml, csv
 
-path_to_file = "data/raw/airline_occurences.csv"
 
-df = pd.read_csv(
-    path_to_file
-)
+config_file_path = "./data_config.yml"
 
-dh = feats.DataHandler(df)
+path_to_file = yaml.safe_load(open(config_file_path))
 
 
 if __name__== "__main__":   
 
-    new_values = dh.get_new_entries_from_yml('./data_config.yml')
+    df = data_loader(config_file_path)
+    dh = datahandler.DataHandler(df)
+
+    new_values = dh.get_new_entries_from_yml(config_file_path)
     
     print("New values received from YAML file!\nColumns:")
+
     print(*list(
         new_values.keys()
         ),
@@ -24,7 +26,9 @@ if __name__== "__main__":
 
     df_columns = list(new_values.keys())
 
-    with open(path_to_file, 'a') as csv_file:
+    print(new_values)
+
+    with open(path_to_file['data_load']['raw_path'], 'a') as csv_file:
         print("Dumping new entries...")
         dict_obj = csv.DictWriter(csv_file, df_columns)
 

@@ -29,5 +29,20 @@ class DataHandler():
             
             values = yaml.safe_load(f)
 
-            return values
+            return values['data_append']
+        
+    def get_path_to_csv_file(self, path_to_yml : object) -> object:
+
+        """
+        Extract path to csv file
+        
+        Args:
+            path_to_yml (object) : object
+        """
+
+        with open(path_to_yml,"r") as f:
+            
+            values = yaml.safe_load(f)
+
+            return values['data_load']['raw_path']
 

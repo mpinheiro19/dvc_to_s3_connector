@@ -14,23 +14,27 @@ if __name__== "__main__":
     df = data_loader(config_file_path)
     dh = datahandler.DataHandler(df)
 
-    new_values = dh.get_new_entries_from_yml(config_file_path)
+
+    # new_values = dh.get_new_entries_from_yml(config_file_path)
     
-    print("New values received from YAML file!\nColumns:")
+    # print("New values received from YAML file!\nColumns:")
 
-    print(*list(
-        new_values.keys()
-        ),
-        sep='\n'
-    )
+    # print(*list(
+    #     new_values.keys()
+    #     ),
+    #     sep='\n'
+    # )
 
-    df_columns = list(new_values.keys())
+    # df_columns = list(new_values.keys())
 
-    print(new_values)
+    # print(new_values)
 
-    with open(path_to_file['data_load']['raw_path'], 'a') as csv_file:
-        print("Dumping new entries...")
-        dict_obj = csv.DictWriter(csv_file, df_columns)
+    # with open(path_to_file['data_load']['raw_path'], 'a') as csv_file:
+    #     print("Dumping new entries...")
+    #     dict_obj = csv.DictWriter(csv_file, df_columns)
 
-        dict_obj.writerow(new_values)
-        print("New row was inserted!")
+    #     dict_obj.writerow(new_values)
+    #     print("New row was inserted!")
+
+    dh.normalize_column_names(df)
+    print(df.head(1))

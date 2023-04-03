@@ -45,4 +45,22 @@ class DataHandler():
             values = yaml.safe_load(f)
 
             return values['data_load']['raw_path']
+        
+    def normalize_column_names(self, df : pd.DataFrame) -> None:
 
+        """
+        normalize column names removing spaces and lowercasing each
+
+        Args:
+            df (pandas.DataFrame) : pandas dataframe to change column names
+        """
+
+        new_column_names = [
+            str(
+                col.replace(" " , "_")      # remove blank spaces
+            ).lower()                       # lowercase string column
+            for col 
+            in df.columns
+        ]
+
+        df.columns = new_column_names

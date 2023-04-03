@@ -25,10 +25,8 @@ def data_loader(config_path : str) -> pd.DataFrame:
     
     # needs assertion for csv files as well
     
-    return data_path#pd.read_csv(data_path)
+    return pd.read_csv(data_path)
 
 def _file_extension_assertion(config_path : str):
 
     assert config_path.endswith(".yml")
-
-data_loader("./data_config.yml")

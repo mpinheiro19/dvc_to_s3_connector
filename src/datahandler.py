@@ -64,3 +64,20 @@ class DataHandler():
         ]
 
         df.columns = new_column_names
+
+    def strip_blank_spaces(self, df : pd.DataFrame) -> None:
+        """
+        remove blank spaces in object pandas.Series
+
+        Args:
+            df (pandas.DataFrame) : dataframe to be treated
+        """
+
+        string_columns = df.select_dtypes('object').columns.to_list()
+
+        for col in string_columns:
+
+            print(f"removing blank spaces in string {col} column .....")
+            df[col] = df[col].str.strip()
+        
+        print("Done!")

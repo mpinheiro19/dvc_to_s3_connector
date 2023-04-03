@@ -14,7 +14,6 @@ if __name__== "__main__":
     df = data_loader(config_file_path)
     dh = datahandler.DataHandler(df)
 
-
     # new_values = dh.get_new_entries_from_yml(config_file_path)
     
     # print("New values received from YAML file!\nColumns:")
@@ -37,4 +36,4 @@ if __name__== "__main__":
     #     print("New row was inserted!")
 
     dh.normalize_column_names(df)
-    print(df.head(1))
+    dh.strip_blank_spaces(df)

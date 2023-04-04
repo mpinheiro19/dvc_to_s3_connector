@@ -81,3 +81,28 @@ class DataHandler():
             df[col] = df[col].str.strip()
         
         print("Done!")
+
+    def check_column_condition(self, col : pd.Series, condition : list) -> pd.Series:
+        """
+        Generate boolean series based on existence of certain element list condition.
+        Returns a boolean column.
+
+        Args:
+            col (pandas.Series) : pd.Series to be evaluated
+            condition (list) : list of values to check 
+        """
+
+        return col.isin(condition)
+    
+    def check_string_expression(self, col : pd.Series, expression : list) -> pd.Series:
+        """
+        Generate boolean series based on existence of certain expressions/words list.
+        Returns a boolean column.
+
+        Args:
+            col (pandas.Series) : pd.Series to be evaluated
+            condition (list) : list of expressions to query    
+        """
+
+        raise NotImplementedError("TBD")
+

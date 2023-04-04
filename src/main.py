@@ -37,3 +37,10 @@ if __name__== "__main__":
 
     dh.normalize_column_names(df)
     dh.strip_blank_spaces(df)
+    
+    df["is_precautionary_procedures"] = dh.check_column_condition(
+        col = df.occurence_precautionary_procedures,
+        condition = ["NONE", "OTHER"]
+        )
+    
+    dh.check_string_expression(df['part_failure'], expression=None)

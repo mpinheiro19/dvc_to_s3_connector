@@ -1,32 +1,36 @@
-import csv
+from data_loader import data_loader
 import pandas as pd
-import datahandler as feats
-
-path_to_file = "data/raw/airline_occurences.csv"
-
-df = pd.read_csv(
-    path_to_file
-)
-
-dh = feats.DataHandler(df)
+import datahandler
+import yaml, nltk
 
 
-if __name__== "__main__":   
+config_file_path = "./data_config.yml"
+path_to_file = yaml.safe_load(open(config_file_path))
 
-    new_values = dh.get_new_entries_from_yml('./data_config.yml')
+
+
+if __name__== "__main__":
+
+    #nltk.download('popular')  
+
+    df = data_loader(config_file_path)
+    dh = datahandler.DataHandler(df)
+    #new_values = dh.get_new_entries_from_yml(config_file_path)
+
+    dh.normalize_column_names(df)
+    dh.strip_blank_spaces(df)
     
-    print("New values received from YAML file!\nColumns:")
-    print(*list(
-        new_values.keys()
-        ),
-        sep='\n'
+    df["is_precautionary_procedures"] = dh.check_column_condition(
+        col = df.occurence_precautionary_procedures,
+        condition = ["NONE", "OTHER"]           #should move this object to yaml file for better experimentation
+        )
+    
+    df["is_major_failure"] = dh.check_string_expression(
+        df['part_failure'].str.lower(),
+        expression=['failed','damaged', 'collapsed']    #should move this object to yaml file for better experimentation
     )
 
-    df_columns = list(new_values.keys())
-
-    with open(path_to_file, 'a') as csv_file:
-        print("Dumping new entries...")
-        dict_obj = csv.DictWriter(csv_file, df_columns)
-
-        dict_obj.writerow(new_values)
-        print("New row was inserted!")
+    df.to_csv(
+        'data/processed/airline_occurences.csv',
+        sep=';'
+    )

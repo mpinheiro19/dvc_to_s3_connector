@@ -1,7 +1,7 @@
 from data_loader import data_loader
 import pandas as pd
 import datahandler
-import yaml, csv
+import yaml, csv, nltk
 
 
 config_file_path = "./data_config.yml"
@@ -9,7 +9,9 @@ config_file_path = "./data_config.yml"
 path_to_file = yaml.safe_load(open(config_file_path))
 
 
-if __name__== "__main__":   
+if __name__== "__main__":
+
+    nltk.download('popular')  
 
     df = data_loader(config_file_path)
     dh = datahandler.DataHandler(df)

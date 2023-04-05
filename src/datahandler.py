@@ -1,4 +1,5 @@
 import yaml
+import nltk
 import pandas as pd
 
 class DataHandler():
@@ -103,6 +104,11 @@ class DataHandler():
             col (pandas.Series) : pd.Series to be evaluated
             condition (list) : list of expressions to query    
         """
+        raise NotImplementedError
 
-        raise NotImplementedError("TBD")
+        # tokenize = col.apply(nltk.tokenize.word_tokenize)
+
+        # for keyword in expression:
+        #     # To be implemented
+        #     #df[f'kw_{expression}'] = tokenize.apply(lambda lst: int(keyword in lst))
 

@@ -1,4 +1,4 @@
-import yaml
+import yaml,csv
 import pandas as pd
 
 def data_loader(config_path : str) -> pd.DataFrame:
@@ -30,3 +30,22 @@ def data_loader(config_path : str) -> pd.DataFrame:
 def _file_extension_assertion(config_path : str):
 
     assert config_path.endswith(".yml")
+
+def insert_csvrow_from_yaml(new_values, path_to_file) -> None:
+
+    print(*list(
+        new_values.keys()
+        ),
+        sep='\n'
+    )
+
+    df_columns = list(new_values.keys())
+
+    print(new_values)
+
+    with open(path_to_file['data_load']['raw_path'], 'a') as csv_file:
+        print("Dumping new entries...")
+        dict_obj = csv.DictWriter(csv_file, df_columns)
+
+        dict_obj.writerow(new_values)
+        print("New row was inserted!")

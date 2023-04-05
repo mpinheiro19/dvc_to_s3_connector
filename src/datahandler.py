@@ -95,20 +95,26 @@ class DataHandler():
 
         return col.isin(condition)
     
-    def check_string_expression(self, col : pd.Series, expression : list) -> pd.Series:
+    def check_string_expression(self, col : pd.Series, expression : list):
         """
         Generate boolean series based on existence of certain expressions/words list.
-        Returns a boolean column.
+        Returns a int(boolean) column if any expression element is present.
 
         Args:
             col (pandas.Series) : pd.Series to be evaluated
             condition (list) : list of expressions to query    
         """
-        raise NotImplementedError
-
-        # tokenize = col.apply(nltk.tokenize.word_tokenize)
-
-        # for keyword in expression:
-        #     # To be implemented
-        #     #df[f'kw_{expression}'] = tokenize.apply(lambda lst: int(keyword in lst))
-
+        
+        # tokenize text column
+        tokenize = col.apply(nltk.tokenize.word_tokenize)
+        
+        # parse each list element in order to boolean check if it is present
+        # in tokenized text col.
+        _ = pd.DataFrame()
+        for ele in expression:
+            _[ele] = tokenize.apply(lambda x : int(ele in x))
+        
+        res = _.max(axis=1)
+        del _
+        
+        return res

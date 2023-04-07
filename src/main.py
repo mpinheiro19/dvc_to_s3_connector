@@ -1,4 +1,5 @@
 from data_loader import data_loader
+from setup import SpacyTooling
 import pandas as pd
 import datahandler
 import yaml, nltk
@@ -30,7 +31,3 @@ if __name__== "__main__":
         expression=['failed','damaged', 'collapsed']    #should move this object to yaml file for better experimentation
     )
 
-    df.to_csv(
-        'data/processed/airline_occurences.csv',
-        sep=';'
-    )
